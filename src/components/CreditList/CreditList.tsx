@@ -16,6 +16,8 @@ interface CreditListProps {
   export default function CreditList({ sortOrder }: CreditListProps) {
     //const products = mockData.products;  //извлекаем из заглушки напрямую (если по простому)
     const [products, setProducts] = useState<IProduct[]>([]); //стейт для запроса из API (если по умному)
+    const [loading, setLoading] = useState<boolean>(true); //стейт для отслеживания загрузки
+
 
     const [filteredProducts, setFilteredProducts] = useState<IProduct[]>([]); //стейт для отфильтрованного списка кредитов
     const amountFilter = useSelector((state: RootState) => state.creditFilter.amount); //через amountFilter подписываемся на изменение amount в глобальном состоянии Redux 
@@ -23,8 +25,10 @@ interface CreditListProps {
 //Имитация запроса к API:
     useEffect(() => {
         const getProducts = async () => {
+        setLoading(true);
         const data = await fetchProducts();  
         setProducts(data);
+        setLoading(false);
         };
         getProducts();
     }, []);
@@ -52,22 +56,19 @@ interface CreditListProps {
 
       return (
         <div className={styles.listContainer}>
-            {filteredProducts.length !== 0 ? (
-              filteredProducts.map((product, index) => (
-                <CreditItem key={index} name={product.name} amount={product.amount} logo={product.logo} />
-              ))
-            ) : (
-              <p className={styles.noResultsMessage}> 
-                Нет кредитных предложений, удовлетворяющих вашему запросу. 
-                <br />
-                Попробуйте снизить желаемую сумму.
-              </p>
-            )}
+          {loading ? ( //чтобы не вылезала красная надпись - отображаем "Загрузка...", пока данные загружаются
+            <p>Загрузка...</p>
+          ) : filteredProducts.length !== 0 ? (  //основная загрузка массива:
+            filteredProducts.map((product, index) => (
+              <CreditItem key={index} name={product.name} amount={product.amount} logo={product.logo} />
+            ))
+          ) : ( //красная надпись:
+            <p className={styles.noResultsMessage}> 
+              Нет кредитных предложений, удовлетворяющих вашему запросу.
+              <br />
+              Попробуйте снизить желаемую сумму.
+            </p>
+          )}
         </div>
-    );
-}
-
-
-
-
-
+      );
+    }
