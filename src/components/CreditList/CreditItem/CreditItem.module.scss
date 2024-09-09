@@ -1,0 +1,41 @@
+.itemContainer {
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    margin-bottom: 10px;
+    background: white;
+    border-radius: 7px;
+    transition:
+    transform 0.2s ease;
+    
+    &:hover { 
+        transform: scale(1.02);
+    }
+
+    .bankContainer {
+        display: flex;
+
+        .bankLogo {
+            width: 60px;
+            height: 60px;
+            border-radius: 5px;
+        }
+        .bankName {
+            margin-top: 0;
+            margin-left: 8px;
+        }
+    }
+
+    .creditContainer {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+
+        .creditTitle {
+            margin: 0;
+        }
+        .creditAmount {
+         margin: 0;
+        }
+    }
+}

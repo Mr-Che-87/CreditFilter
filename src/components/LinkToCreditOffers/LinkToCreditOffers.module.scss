@@ -1,0 +1,17 @@
+.linkContainer {
+
+    .shareButton {
+        padding: 10px;
+        background-color: #1e67b4;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        width: 155px;
+        height: 40px;
+        font-size: 13px;
+
+        &:hover {
+            background-color: #007bffc5;
+        }
+    }
+}
